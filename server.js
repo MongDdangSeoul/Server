@@ -2,6 +2,9 @@ var express = require('express');
 var mysql = require('mysql');
 var multer = require('multer');
 
+var app = express();
+var upload = multer();
+
 var connection = mysql.createConnection({
         host    : 'localhost',
         user    : 'root',
@@ -10,8 +13,15 @@ var connection = mysql.createConnection({
         database: 'culture'
 });
 
-var app = express();
-var upload = multer();
+connection.connect(function(err){
+    if(err){
+        console.log('DB connection failed.');
+        exit();
+    } else{
+        console.log('DB connection succeeded.');
+    }
+});
+
 
 app.post('/sign_up', upload.any(), function (req, res) {
     var id = req.body.id;
