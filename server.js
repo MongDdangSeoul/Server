@@ -61,6 +61,7 @@ app.post('/sign_in', upload.any(), function (req, res) {
                 }
         });
 });
+
 app.post('/follow', upload.any(), function (req, res) {
         var leader = req.body.leader;
         var follower = req.body.follower;
@@ -74,7 +75,6 @@ app.post('/follow', upload.any(), function (req, res) {
         });
 });
 
-
 app.post('/follow_cancel', upload.any(), function (req, res) {
         var leader = req.body.leader;
         var follower = req.body.follower;
@@ -82,6 +82,31 @@ app.post('/follow_cancel', upload.any(), function (req, res) {
         connection.query('DELETE FROM followers WHERE leader = "' + leader + '" AND follower = "' + follower + '"', function(err, rows, fields){
                 if(!err){
                     res.send('ok');
+                } else {
+                    res.send('db_error');
+                }
+        });
+});
+
+app.post('/follower_list', upload.any(), function (req, res) {
+        var id = req.body.id;
+
+        connection.query('SELECT users.id, users.name FROM users, followers WHERE users.id = followers.follower AND followers.leader = "' + id +'"', function(err, rows, fields){
+                if(!err){
+                    res.send(rows);
+                } else {
+                    res.send('db_error');
+                }
+        });
+});
+
+
+app.post('/following_list', upload.any(), function (req, res) {
+        var id = req.body.id;
+
+        connection.query('SELECT users.id, users.name FROM users, followers WHERE users.id = followers.leader AND followers.follower = "' + id +'"', function(err, rows, fields){
+                if(!err){
+                    res.send(rows);
                 } else {
                     res.send('db_error');
                 }
