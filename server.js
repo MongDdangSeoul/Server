@@ -64,12 +64,26 @@ app.post('/sign_in', upload.any(), function (req, res) {
 app.post('/follow', upload.any(), function (req, res) {
         var leader = req.body.leader;
         var follower = req.body.follower;
-        
+
         connection.query('INSERT INTO followers VALUES ("' + leader +'","'+ follower + '")', function(err, rows, fields){
                 if(!err){
                     res.send('ok');
                 } else {
-                    res.send('error');
+                    res.send('db_error');
+                }
+        });
+});
+
+
+app.post('/follow_cancel', upload.any(), function (req, res) {
+        var leader = req.body.leader;
+        var follower = req.body.follower;
+
+        connection.query('DELETE FROM followers WHERE leader = "' + leader + '" AND follower = "' + follower + '"', function(err, rows, fields){
+                if(!err){
+                    res.send('ok');
+                } else {
+                    res.send('db_error');
                 }
         });
 });
