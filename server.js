@@ -61,6 +61,18 @@ app.post('/sign_in', upload.any(), function (req, res) {
                 }
         });
 });
+app.post('/follow', upload.any(), function (req, res) {
+        var leader = req.body.leader;
+        var follower = req.body.follower;
+        
+        connection.query('INSERT INTO followers VALUES ("' + leader +'","'+ follower + '")', function(err, rows, fields){
+                if(!err){
+                    res.send('ok');
+                } else {
+                    res.send('error');
+                }
+        });
+});
 
 app.listen(8001, function () {
         console.log('Server is listening on port 8001');
