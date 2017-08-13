@@ -8,7 +8,9 @@ CREATE TABLE users(
 );
 
 CREATE TABLE followers(
-    leader varchar(20) NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    follower varchar(20) NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    CONSTRAINT PK_COMPOSITE PRIMARY KEY(leader, follower)
+    leader varchar(20) NOT NULL ,
+    follower varchar(20) NOT NULL,
+    CONSTRAINT PK_COMPOSITE PRIMARY KEY(leader, follower),
+    FOREIGN KEY(leader) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY(follower) REFERENCES users (id) ON DELETE CASCADE
 );

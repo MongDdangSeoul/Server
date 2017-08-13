@@ -22,7 +22,6 @@ connection.connect(function(err){
     }
 });
 
-
 app.post('/sign_up', upload.any(), function (req, res) {
     var id = req.body.id;
     var pw = req.body.pw;
@@ -99,7 +98,6 @@ app.post('/follower_list', upload.any(), function (req, res) {
                 }
         });
 });
-
 
 app.post('/following_list', upload.any(), function (req, res) {
         var id = req.body.id;
